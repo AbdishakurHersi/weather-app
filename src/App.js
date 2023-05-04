@@ -39,10 +39,11 @@ import "./App.css";
 import CurrentWeather from "./components/CurrentWeather/CurrentWeather";
 import { WEATHER_API_KEY, WEATHER_API_URL } from "./components/api";
 import { useState } from "react";
+import Forecast from "./components/Forecast/Forecast";
 
 function App() {
   const [currentWeather, setCurrentWeather] = useState(null);
-  // const [forecast, setForecast] = useState(null);
+  const [forecast, setForecast] = useState(null);
 
   const handleOnSearchChange = (searchData) => {
     const [lat, lon] = searchData.value.split(" ");
@@ -60,7 +61,7 @@ function App() {
         const forcastResponse = await response[1].json();
 
         setCurrentWeather({ city: searchData.label, ...weatherResponse });
-        // setForecast({ city: searchData.label, ...forcastResponse });
+        setForecast({ city: searchData.label, ...forcastResponse });
       })
       .catch(console.log);
   };
@@ -69,7 +70,7 @@ function App() {
     <div className="container">
       <Search onSearchChange={handleOnSearchChange} />
       {currentWeather && <CurrentWeather data={currentWeather} />}
-      {/* {forecast && <Forecast data={forecast} />} */}
+      {forecast && <Forecast data={forecast} />}
     </div>
   );
 }
